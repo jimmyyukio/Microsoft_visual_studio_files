@@ -1,0 +1,17 @@
+/*
+2019年12月21日 17:06:36
+*/
+
+# include<stdio.h>
+# include<time.h>
+
+int main(void)
+{
+
+	time_t TIME;//定义一个变量用来接收当前时间
+	time(&TIME);
+	printf("%d\n",time)
+	
+	getchar();
+	return 0;
+}
