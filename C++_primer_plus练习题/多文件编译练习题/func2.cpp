@@ -50,7 +50,7 @@ void SALES::setSales(Sales& s)/* 非交互式 */
 
 void SALES::showSales(const Sales& s)/* 输出数据 */
 {
-    std::cout << "The Sales struct's value : \n"
+    std::cout << "The Sales struct value : \n"
         << "sales array : ";
     for (int i = 0; i < QUARTERS; i++)
     {
