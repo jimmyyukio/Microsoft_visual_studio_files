@@ -24,7 +24,7 @@ bool list::creatnode(const std::string name , const double value)
 {
 	PNODE tem;
 	tem = new node;
-	if (tem == NULL)
+	if ( !tem )
 		return false;
 	// 初始化 [4/21/2020 14257]
 	tem->m_name = name;
@@ -71,20 +71,18 @@ void list::changevalue(const int position, const double value)
 	p->m_value = value;
 }
 
-list::node list::re_delete(const int position)
+list::PNODE list::re_delete(const int position)
 {
 	PNODE p = phead;
-	PNODE tem;
+	
 	for (int i = 0; i < position-1; i++)
 		p = p->next;//指向要删除的结点前一个结点
-	tem = p->next;//指向要删除的结点
-	temnode = *(p->next);//将删除的结点存入临时点
-	if (tem->next != NULL)//如果删除元素后还有元素
+	temnode = p->next;//将要删除的结点的地址传递给临时结点指针
+	
+	if (p->next->next != NULL)//如果删除元素后还有元素
 		p->next = p->next->next;//将要删除的结点的前一个结点和后一个结点相连接
 	else//否则直接断开连接
 		p->next = NULL;
-
-	delete(tem);//删除结点
 	nodenum--;
 	return temnode;
 }
@@ -97,7 +95,7 @@ bool list::insert(int fposition)
 
 	// 创建新结点 [4/21/2020 14257]
 	PNODE newnode = new node;
-	if (newnode == NULL)
+	if ( !newnode )
 		return false;
 	std::cout << "enter the name of new node : ";
 	std::string newname;
@@ -109,7 +107,7 @@ bool list::insert(int fposition)
 	newnode->m_value = value;
 	//  [4/21/2020 14257]
 
-	if (p->next != NULL)//如果后面有元素
+	if ( p->next != NULL )//如果后面有元素
 	{
 		newnode->next = p->next;
 		p->next = newnode;
