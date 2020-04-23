@@ -18,15 +18,16 @@ using std::atan;
 using std::atan2;
 using std::cout;
 
-namespace VECTOR
+namespace VECTOR//对名称空间进行拓展
 {
-    const double Rad_to_deg = 45.0 / atan(1.0);
-    void Vector::set_mag()
+    const double Rad_to_deg = 45.0 / atan(1.0);//转化为度数
+
+    void Vector::set_mag()//矢量大小
     {
         mag = sqrt(x * x + y * y);
     }
 
-    void Vector::set_ang()
+    void Vector::set_ang()//矢量的方向
     {
         if (x == 0.0 && y == 0.0)
             ang = 0.0;
@@ -39,7 +40,12 @@ namespace VECTOR
         x = mag * cos(ang);
     }
 
-    Vector::Vector()
+	void Vector::set_y()
+	{
+		y = mag * sin(ang);
+	}
+
+    Vector::Vector()//构造函数
     {
         x = y = mag = ang = 0.0;
         mode = RECT;
@@ -73,7 +79,7 @@ namespace VECTOR
 
     void Vector::reset(double n1, double n2, Mode form)
     {
-        mode = form;
+        mode = form;//更改类的成员函数mode为当前所选择的表示模式
         if (form == RECT)
         {
             x = n1;
@@ -97,11 +103,11 @@ namespace VECTOR
         }
     }
 
-    Vector::~Vector()
+    Vector::~Vector()//析构函数
     {
     }
 
-    void Vector::polar_mode()
+    void Vector::polar_mode()//设置模式
     {
         mode = POL;
     }
@@ -111,6 +117,7 @@ namespace VECTOR
         mode = RECT;
     }
 
+    // 首先隐式调用Vector对象中的x和y，然后显式的调用引用对象b的x和y [4/23/2020 yukio]
     Vector Vector::operator+(const Vector& b) const
     {
         return Vector(x + b.x, y + b.y);
@@ -131,14 +138,16 @@ namespace VECTOR
         return Vector(n * x, n * y);
     }
 
-    Vector operator*(double n, const Vector& a)
+
+
+    Vector operator*(double n, const Vector& a)//友元函数，返回Vector对象
     {
         return a * n;
     }
 
-    std::ostream& operator<<(std::ostream& os, const Vector& v)
+    std::ostream& operator<<(std::ostream& os, const Vector& v)//友元函数，返回ostream对象的引用
     {
-        if (v.mode == Vector::RECT)
+        if (v.mode == Vector::RECT)//对当前模式进行判断，判断用户选择的表示方法
         {
             os << "(x,y) = (" << v.x << ", " << v.y << ")";
         }
