@@ -145,7 +145,7 @@ namespace VECTOR//对名称空间进行拓展
         return a * n;
     }
 
-    std::ostream& operator<<(std::ostream& os, const Vector& v)//友元函数，返回ostream对象的引用
+    std::ostream& operator<<(std::ostream& os, const Vector& v)//友元函数，返回ostream对象的引用，重载了<<符号，方便直接对对象进行输出
     {
         if (v.mode == Vector::RECT)//对当前模式进行判断，判断用户选择的表示方法
         {
