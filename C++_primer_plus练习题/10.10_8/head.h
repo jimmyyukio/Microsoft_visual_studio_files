@@ -27,8 +27,8 @@ class list
 public:
 	list();//创建一个空链表
 	bool creatnode(const std::string name = "noname", const double value = 0);//创建新的节点
-	bool is_empty();
-	void showlist();
+	bool is_empty();//判断是否为空
+	void showlist();//遍历
 	bool insert(int fposition);//插入一个结点
 	PNODE re_delete(const int position);//删除一个结点把删除掉的结点返回
 	void changename(const int position , const std::string name);
