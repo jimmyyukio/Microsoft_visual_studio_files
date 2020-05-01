@@ -15,15 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector.h">
+    <ClInclude Include="head.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="func1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="func2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

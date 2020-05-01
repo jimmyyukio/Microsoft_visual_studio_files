@@ -17,102 +17,80 @@ using std::atan;
 using std::atan;
 using std::atan2;
 using std::cout;
+using std::acos;
 
 namespace VECTOR//对名称空间进行拓展
 {
     const double Rad_to_deg = 45.0 / atan(1.0);//转化为度数
 
-    void Vector::set_mag()//矢量大小
-    {
-        mag = sqrt(x * x + y * y);
-    }
+    //void Vector::set_mag()//矢量大小
+    //{
+    //    mag = sqrt(x * x + y * y);
+    //}
 
-    void Vector::set_ang()//矢量的方向
-    {
-        if (x == 0.0 && y == 0.0)
-            ang = 0.0;
-        else
-            ang = atan2(y, x);
-    }
+    //void Vector::set_ang()//矢量的方向
+    //{
+    //    if (x == 0.0 && y == 0.0)
+    //        ang = 0.0;
+    //    else
+    //        ang = atan2(y, x);
+    //}
 
-    void Vector::set_x()
-    {
-        x = mag * cos(ang);
-    }
-
-	void Vector::set_y()
+	void Vector::set_x(double m_x)
 	{
-		y = mag * sin(ang);
+        x = m_x;
 	}
 
-    Vector::Vector()//构造函数
+	void Vector::set_y(double m_y)
+	{
+		y = m_y;
+	}
+
+
+
+    double Vector::calculatemag()//求第三边的长度
     {
-        x = y = mag = ang = 0.0;
+        double len;
+        len = sqrt(this->x * this->x + this->y * this->y);
+        return len;
+    }
+
+    double Vector::calculateang(double& len) const//求角度
+    {
+        double cosA = (len * len + this->x * this->x - this->y * this->y) / (2 * len * this->x);
+        double ang = acos(cosA);
+
+        return ang;
+    }
+    Vector::Vector()//默认构造函数,默认表示方式为坐标轴表示法
+    {
+        x = y = 0.0;
         mode = RECT;
     }
 
-    Vector::Vector(double n1, double n2, Mode form)
+    Vector::Vector(double n1, double n2 , Mode m_mode)//构造函数
     {
-        mode = RECT;
-        if (form == RECT)
-        {
-            x = n1;
-            y = n2;
-            set_mag();
-            set_ang();
-        }
-        else if(form == POL)
-        {
-            mag = n1;
-            ang = n2;
-            set_x();
-            set_y();
-        }
-        else
-        {
-            cout << "Incorrect 3rd argument to Vector(）-- ";
-            cout << "vector set to 0\n";
-            x = y = mag = ang = 0.0;
-            mode = RECT;
-        }
+        x = n1;
+        y = n2;
+        mode = m_mode;
     }
 
-    void Vector::reset(double n1, double n2, Mode form)
+    void Vector::reset(double dstep, double direction)//用于重置
     {
-        mode = form;//更改类的成员函数mode为当前所选择的表示模式
-        if (form == RECT)
-        {
-            x = n1;
-            y = n2;
-            set_mag();
-            set_ang();
-        }
-        else if (form == POL)
-        {
-            mag = n1;
-            ang = n2;
-            set_x();
-            set_y();
-        }
-        else
-        {
-            cout << "Incoorect 3rd argument to Vector() -- ";
-            cout << "Vector set to 0\n";
-            x = y = mag = ang = 0.0;
-            mode = RECT;
-        }
+        x = dstep * cos(direction);
+        y = dstep * sin(direction);
     }
 
     Vector::~Vector()//析构函数
     {
     }
 
-    void Vector::polar_mode()//设置模式
+    void Vector::polar_mode()//更改显示数据时使用的模式
     {
         mode = POL;
     }
 
-    void Vector::rect_mode()
+    void Vector::rect_mode()//同上
     {
         mode = RECT;
     }
@@ -153,8 +131,10 @@ namespace VECTOR//对名称空间进行拓展
         }
         else if (v.mode == Vector::POL)
         {
-            os << "(m,a) = (" << v.mag << ", "
-                << v.ang * Rad_to_deg << ")";
+            double mag = sqrt(v.x * v.x + v.y * v.y);
+            double ang = v.calculateang(mag);
+            os << "(m,a) = (" << mag << ", "
+                << ang * Rad_to_deg << ")";
         }
         else
             os << "Vector object mode is invaild";

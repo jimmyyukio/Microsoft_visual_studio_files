@@ -43,6 +43,14 @@ namespace VECTOR
 		friend Vector operator*(double n, const Vector& a);//重载*运算符
 		friend std::ostream& operator<<(std::ostream& os, const Vector& v);//重载<<运算符
 	};
+
+	struct record
+	{
+		Vector high;
+		Vector low;
+		double totalstep;
+		double times;
+	};
 }
 
 # endif

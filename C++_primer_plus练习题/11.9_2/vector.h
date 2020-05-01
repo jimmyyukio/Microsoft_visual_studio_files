@@ -1,3 +1,4 @@
+
 #pragma once
 # ifndef _TEST_
 # define _TEST_
@@ -8,27 +9,30 @@ namespace VECTOR
 	class Vector
 	{
 	public:
-		enum Mode {RECT , POL};
+		enum Mode { RECT, POL };
 	private:
 		double x;
 		double y;
-		double mag;
-		double ang;
-		void set_mag();
-		void set_ang();
-		void set_x();
-		void set_y();
+		//double mag;
+		//double ang;
+		//void set_mag();
+		//void set_ang();
+		void set_x(double);
+		void set_y(double);
 		Mode mode;// 设置模式 [4/23/2020 14257]
 	public:
 		Vector();//默认构造函数
-		Vector(double n1, double n2, Mode form = RECT);//默认为RECT模式
-		void reset(double n1, double n2, Mode form = RECT);
+		Vector(double n1, double n2 , Mode m_mode = RECT);//默认为RECT模式
+		void reset(double dstep ,double direction);
 		~Vector();
 		// 内联函数,用于反馈x,y,mag,ang数据 [4/23/2020 14257]
 		double xval() const { return x; }
 		double yval() const { return y; }
-		double magval() const { return mag; }
-		double angval() const { return ang; }
+		//通过x，y对其进行计算
+		/*double magval() const;
+		double angval() const;*/
+		double calculatemag();//计算边长
+		double calculateang(double& len) const;//求反三角函数
 
 		// 设置使用表示位置的方式 [4/23/2020 14257]
 		void polar_mode();//设置为大小和角度的表示方式
