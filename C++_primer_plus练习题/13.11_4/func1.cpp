@@ -54,7 +54,7 @@ ostream& operator<<(ostream& os, const Port& p)
 {
 	os << p.brand << " , ";
 	os << p.style << " , ";
-	os << p.bottles << endl;
+	os << p.bottles;
 	return os;
 }
 
@@ -110,11 +110,11 @@ ostream& operator<<(ostream& os, const VintagePort& vp)
 	//os << vp;//借用基类中的重载输出基类数据成员
 	// 错误写法，这样会进入死递归 [5/2/2020 14257]
 	//vp.Port::Show();
-	
+	os << (Port&)vp;//将VP强制类型转换为Port类引用，从而能够正确的调用友元函数
 	if (vp.nickname != nullptr)
 		os << " , " << vp.nickname;
 	else
-		cout << "nickname is empty !";
-	os << " , " << vp.year << endl;
+		cout << " , nickname is empty !";
+	os << " , " << vp.year;
 	return os;
 }
