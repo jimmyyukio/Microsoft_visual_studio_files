@@ -32,25 +32,37 @@ void putmenu_one(Puser one)//一级菜单
 	printf("\n");
 	printf("\n");
 	printf("***************************************************\n");
-	printf("[提示：用户名为 jimmy 密码为 1425717639\n");
-	printf("[可以故意错误的输入进行测试]\n");
+	printf("     [提示：默认用户名为 jimmy 密码为 1425717639\n");
 	SetPosition(4, 4);
-	printf("请输入账号：");
+	printf("请输入账号（输入q退出）：");
 	char* username = (char*)malloc(sizeof(MAX_LEN));
+	fflush(stdin);
 	scanf("%s", username);
+	if (username == "q")
+	{
+		system("pause");
+		printf("感谢您的使用！");
+	}
 	SetPosition(4, 7);
 	printf("请输入密码：");
 	char* psw = (char*)malloc(sizeof(MAX_LEN));
+	fflush(stdin);
 	scanf("%s", psw);
-	verify(username , psw , one);
-	SetPosition(4, 15);
-	printf("登录成功！即将进入二级菜单！\n");
-	printf("         3...\n");
-	Sleep(1000);
-	printf("         2...\n");
-	Sleep(1000);
-	printf("         1...\n");
-	Sleep(1000);
+	verify(username , psw , one);//验证密码和账号
+	static int time = 0;
+	time++;
+	if(time == 1)
+	{
+		SetPosition(4, 15);
+		printf("登录成功！即将进入二级菜单！\n");
+		printf("         3...\n");
+		Sleep(1000);
+		printf("         2...\n");
+		Sleep(1000);
+		printf("         1...\n");
+		system("cls");
+		Sleep(1000);
+	}
 }
 
 void verify(char* username , char* psw , Puser one)//验证

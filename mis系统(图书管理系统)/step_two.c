@@ -13,6 +13,7 @@ void printmune(void);
 void findbook(PStack);
 void lookbook(PStack);
 extern void SetPosition(int x, int y);
+void del(Puser , PStack);
 
 void putmenu_two(Puser one , PStack two)//二级菜单
 {
@@ -22,53 +23,60 @@ void putmenu_two(Puser one , PStack two)//二级菜单
 	{
 		printmune();
 		printf("请输入您的选择：");
-		int choose;
-		scanf("%d", &choose);
+		char choose;
+		fflush(stdin);
+		scanf("%c", &choose);
 		switch (choose)
 		{
-		case 1:
+		case '1'://添加图书
 			system("cls");
 			addbook(two);
 			system("cls");
 			break;
-		case 2:
+		case '2'://删除图书
 			system("cls");
 			deletebook(two);
 			system("cls");
 			break;
-		case 3:
+		case '3'://寻找图书
 			system("cls");
 			findbook(two);
 			system("cls");
 			break;
-		case 4:
+		case '4'://遍历所有图书
 			system("cls");
 			lookbook(two);
 			system("cls");
 			break;
-		case 5:
+		case '5'://借书
 			system("cls");
-			//func5();
+			//func5(one);
 			printf("功能未完成！请测试前4个选项");
 			Sleep(2*1000);
 			system("cls");
 			break;
-		case 6:
+		case '6'://还书
 			system("cls");
-			//func6();
+			//func6(one);
 			printf("功能未完成！请测试前4个选项");
 			Sleep(2*1000);
 			system("cls");
 			break;
-		case 7:
+		case '7'://查看已经借阅的图书
 			system("cls");
-			//func7();
+			//func7(one);
 			printf("功能未完成！请测试前4个选项");
 			Sleep(2*1000);
 			system("cls");
 			break;
-		case 8:
+		case '8'://更改密码
 			system("cls");
+			changepw(one);
+			system("cls");
+			break;
+		case '9':
+			system("cls");
+			del(one,two);
 			SetPosition(25,12);
 			printf("感谢您的使用，即将退出程序！\n");
 			Sleep(2*1000);
@@ -103,8 +111,10 @@ void printmune(void)
 	printf("  (6)还书\n");
 	printf("\n");
 	printf("  (7)查看已借阅的图书\n");
+	printf("\n");	
+	printf("  (8)更改密码\n");
 	printf("\n");
-	printf("  (8)退出程序\n");
+	printf("  (9)退出程序\n");
 	printf("\n");
 	printf("***************************************************\n");
 }
@@ -114,6 +124,7 @@ void addbook(PStack two)
 	PStack tem = two;
 	printf("\n请输入要添加的图书名：");
 	char* name = (char*)malloc(MAX_LEN);
+	fflush(stdin);
 	scanf("%s", name);
 	PBook book = (PBook)malloc(sizeof(PBook));
 	if (!book)
@@ -123,6 +134,7 @@ void addbook(PStack two)
 	book->bookname = name;
 	printf("\n请输入对图书的描述：");
 	char* describe = (char*)malloc(MAX_DES);
+	fflush(stdin);
 	scanf("%s", describe);
 	book->describe = describe;
 	book->status = NO;
@@ -174,6 +186,7 @@ void deletebook(PStack two)
 	PStack tem2 = two;
 	printf("请输入要删除的书的编号:");
 	int num;
+	fflush(stdin);
 	scanf("%d", &num);
 	for (int i = 0; i < num; i++)
 	{
@@ -235,6 +248,7 @@ void findbook(PStack two)
 {
 	printf("请输入您要查找的书籍的名字：");
 	char* name = (char*)malloc(MAX_LEN);
+	fflush(stdin);
 	scanf("%s", name);
 	int position = 1;
 	while (two->next != NULL)
@@ -283,5 +297,34 @@ void lookbook(PStack two)
 		num++;
 	}
 	system("pause");
+	return;
+}
+
+void del(Puser one , PStack two)//释放所有的内存
+{
+	//释放书库
+	PStack tem = two;//临时指针
+	if(tem->next == NULL)//如果为空链表
+		free(two);//直接释放头结点
+	else
+	{
+		tem = tem->next;
+		free(two);//对第一个头结点特殊处理
+		while(tem != NULL)
+		{
+			two = tem;
+			tem = tem->next;
+			free(two->point->bookname);
+			free(two->point->describe);
+			free(two->point);
+			free(two);
+		}
+	}
+	//释放用户
+	Puser tem2 = one;
+	free(one->user);
+	free(one->password);
+	free(one);
+	
 	return;
 }
