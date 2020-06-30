@@ -14,4 +14,4 @@ mis.o: mis.c step_one.o step_two.o message.o head.h
 	gcc -c -g mis.c
 
 clean:
-	del message.o mis.o step_one.o step_two.o
+	rm message.o mis.o step_one.o step_two.o

@@ -2,6 +2,11 @@
 # include"head.h"
 # include<stdlib.h>
 
+Puser creatuser();
+PStack creatstack();
+void putmenu_one(Puser);
+void putmenu_two(Puser , PStack);
+
 int main(void)
 {
 	Puser one = creatuser();//创建用户对象
@@ -12,11 +17,3 @@ int main(void)
 
 	return 0;
 }
-
-//测试
-//PStack test = two;
-//while (test->next != NULL)
-//{
-//	test = test->next;
-//	printf("%s\n", (test->point->bookname));
-//}

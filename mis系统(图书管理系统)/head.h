@@ -24,7 +24,7 @@ typedef struct//用户的结构
 {
     char* user;//存储用户的账户名
     char* password;//存储用户的密码
-    PBook bbook;//存储已经借了的书
+    PBook bbook[10];//存储已经借了的书
     int bbooknum;//已经借到的书的数量
 }user,*Puser;
 

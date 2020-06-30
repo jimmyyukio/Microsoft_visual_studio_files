@@ -2,7 +2,7 @@
 # include"head.h"
 # include<stdlib.h>
 # include<windows.h>
-const int MAX_NUM = 3; //能够借到的最大数量
+const int MAX_NUM = 10; //能够借到的最大数量
 const int MAX_NAMENUM = 20;//书名的最大长度
 const int MAX_ACLEN = 15;//最大账号长度
 const int MAX_PWLEN = 20;//最大密码长度
@@ -41,12 +41,12 @@ Puser creatuser(void)//创建一个用户
 		fputs(" ",fp);
 		fwrite(one->password, sizeof(char), strlen(one->password), fp);
 	}
-	one->bbook = (PBook)malloc(sizeof(Book) * MAX_NUM);//创建一个字符串数组
+	one->bbook[10] = (PBook)malloc(sizeof(Book) * MAX_NUM);//创建一个用于存储书籍的数组
 	if (!(one->bbook))
 	{
 		exit(-1);
 	}
-	one->bbooknum = 0;
+	one->bbooknum = 0;//初始借到的书为0
 	fclose(fp);
 	return one;
 }
